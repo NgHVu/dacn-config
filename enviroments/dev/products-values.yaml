@@ -1,14 +1,18 @@
 replicaCount: 1
 containerPort: 8081
+
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-products
   tag: fd20745
 
 env:
   - name: DB_USER
-    value: "user_products"
+    value: "foodhub_products" # Sửa lại cho khớp với Role trong Postgres
   - name: DB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: foodhub-secrets
         key: DB_PASSWORD_PRODUCTS
+  # Bổ sung DB_URL nếu chưa có trong ConfigMap
+  - name: DB_URL
+    value: "jdbc:postgresql://foodhub-db.cnwgawc8eb9k.ap-southeast-1.rds.amazonaws.com:5432/foodhub-db"
