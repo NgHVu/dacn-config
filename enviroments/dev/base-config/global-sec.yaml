@@ -6,17 +6,20 @@ metadata:
 type: Opaque
 data:
   # Mật khẩu Admin (cho RDS)
-  DB_ADMIN_PASSWORD: FoodHub12345
+  DB_ADMIN_PASSWORD: Rm9vZEh1YjEyMzQ1
   
   # Mật khẩu cho từng Service User (Lấy từ chuỗi Base64 bạn gửi)
-  DB_PASSWORD_USERS: Password_users_123
-  DB_PASSWORD_PRODUCTS: Password_products_123
-  DB_PASSWORD_ORDERS: Password_orders_123
+  DB_PASSWORD_USERS: UGFzc3dvcmRfdXNlcnNfMTIz
+  DB_PASSWORD_PRODUCTS: UGFzc3dvcmRfcHJvZHVjdHNfMTIz
+  DB_PASSWORD_ORDERS: UGFzc3dvcmRfb3JkZXJzXzEyMw==
 
-  JWT_SECRET_KEY: dGhpcy1pcy1hLXNlY3JldC1rZXktZm9yLWp3dC1hdXRoZW50aWNhdGlvbi1pbi1kZXZzZWNvcHMtcHJvamVjdC1tdXN0LWJlLXZlcnktbG9uZy1hbmQtc2VjdXJl
+  JWT_SECRET_KEY: ZWNobyAtbiBkR2hwY3kxcGN5MWhMWE5sWTNKbGRDMXJaWGt0Wm05eUxXcDNkQzFoZFhSb1pXNTBh
+V05oZEdsdmJpMXBiaTFrWlhaelpXTnZjSE10Y0hKdmFtVmpkQzF0ZFhOMExXSmxMWFpsY25rdGJH
+OXVaeTFoYm1RdGMyVmpkWEpsIHwgYmFzZTY0
 
-  SPRING_MAIL_PASSWORD: knfz pbig grvg yitz
+  SPRING_MAIL_PASSWORD: a25meiBwYmlnIGdydmcgeWl0eg==
 
   # JWT & OAuth2 (Bạn điền Base64 của bạn vào đây)
-  GOOGLE_CLIENT_ID: 210099132466-tld27udkcs4krtmuthp78281g0ibjfja.apps.googleusercontent.com
-  GOOGLE_CLIENT_SECRET: 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
+  GOOGLE_CLIENT_ID: MjEwMDk5MTMyNDY2LXRsZDI3dWRrY3M0a3J0bXV0aHA3ODI4MWcwaWJqZmphLmFwcHMuZ29vZ2xl
+dXNlcmNvbnRlbnQuY29t
+  GOOGLE_CLIENT_SECRET: R09DU1BYLXpjaENDc0lTeTVYcFVTNlk2cUdpYjVaT3BIN1o=
