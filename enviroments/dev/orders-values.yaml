@@ -2,7 +2,7 @@ replicaCount: 1
 containerPort: 8083
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-orders
-  tag: 8f5f0dd
+  tag: 275ddf9
 
 env:
   - name: DB_USER
