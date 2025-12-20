@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: foodhub-secrets
+  namespace: foodhub-dev
+type: Opaque
+data:
+  # Mật khẩu Admin (cho RDS)
+  DB_ADMIN_PASSWORD: FoodHub12345
+  
+  # Mật khẩu cho từng Service User (Lấy từ chuỗi Base64 bạn gửi)
+  DB_PASSWORD_USERS: Password_users_123
+  DB_PASSWORD_PRODUCTS: Password_products_123
+  DB_PASSWORD_ORDERS: Password_orders_123
+
+  JWT_SECRET_KEY: dGhpcy1pcy1hLXNlY3JldC1rZXktZm9yLWp3dC1hdXRoZW50aWNhdGlvbi1pbi1kZXZzZWNvcHMtcHJvamVjdC1tdXN0LWJlLXZlcnktbG9uZy1hbmQtc2VjdXJl
+
+  SPRING_MAIL_PASSWORD: knfz pbig grvg yitz
+
+  # JWT & OAuth2 (Bạn điền Base64 của bạn vào đây)
+  GOOGLE_CLIENT_ID: 210099132466-tld27udkcs4krtmuthp78281g0ibjfja.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET: 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
