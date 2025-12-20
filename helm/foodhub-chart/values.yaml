@@ -3,20 +3,27 @@
 # Số lượng bản sao mặc định
 replicaCount: 1
 
-# Cấu hình Image mặc định (Sẽ bị ghi đè bởi từng service)
+# Cấu hình Image mặc định
 image:
-  repository: "" # Để trống vì mỗi service có ECR riêng
+  repository: "" 
   tag: "latest"
   pullPolicy: Always
 
-# Cổng mặc định của container (ví dụ backend là 8080)
+# Cổng mặc định của container
 containerPort: 8080
 
-# Loại Service mặc định (Nội bộ)
-serviceType: ClusterIP
-# servicePort: 80 # Có thể bỏ qua nếu muốn dùng containerPort làm servicePort
+# --- BỔ SUNG: Cấu hình mặc định cho Health Check ---
+# Đường dẫn kiểm tra sức khỏe (Mặc định cho Backend)
+probePath: "/actuator/health/readiness" 
 
-# Tài nguyên mặc định (Để EKS không bị quá tải)
+# Thời gian chờ khởi động (Mặc định cho Backend cần tạo DB)
+readinessDelay: 60
+livenessDelay: 80
+
+# Loại Service mặc định
+serviceType: ClusterIP
+
+# Tài nguyên mặc định
 resources:
   limits:
     cpu: 500m
@@ -28,9 +35,9 @@ resources:
 # Namespace triển khai
 namespace: foodhub-dev
 
-# Biến môi trường mặc định (thường để trống, sẽ khai báo riêng trong từng service-values)
+# Biến môi trường mặc định
 env: []
 
-# Cấu hình Ingress (Mặc định tắt vì bạn đang dùng LoadBalancer cho Frontend)
+# Cấu hình Ingress
 ingress:
   enabled: false
