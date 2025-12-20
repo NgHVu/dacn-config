@@ -1,7 +1,13 @@
 replicaCount: 1
 containerPort: 3000
-serviceType: LoadBalancer # Tạo ELB trên AWS
-servicePort: 80            # Truy cập qua cổng 80
+serviceType: LoadBalancer 
+servicePort: 80
+
+# --- BỔ SUNG: Health Check cho Frontend ---
+probePath: "/"              # Sửa lỗi 404 vì Frontend không có actuator
+readinessDelay: 15          # Thời gian chờ khởi động nhanh
+livenessDelay: 30
+
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-frontend
   tag: fd20745
@@ -9,7 +15,6 @@ image:
 env:
   - name: NODE_ENV
     value: "production"
-  # Các biến này cực kỳ quan trọng cho file next.config.js của bạn
   - name: USERS_SERVICE_URL
     value: "http://users-service:8082"
   - name: PRODUCTS_SERVICE_URL
