@@ -1,0 +1,24 @@
+apiVersion: v2
+name: foodhub-chart
+description: Helm chart cho các dịch vụ Microservices của hệ thống FoodHub
+
+# Loại chart: 'application' cho ứng dụng, 'library' cho thư viện dùng chung
+type: application
+
+# Phiên bản của bản thân cái Chart này (Sẽ tăng lên khi bạn thay đổi cấu trúc YAML)
+version: 0.1.0
+
+# Phiên bản của ứng dụng (Thường khớp với version code/image của bạn)
+appVersion: "1.0.0"
+
+# Thông tin tác giả (Tùy chọn, thêm vào để đồ án chuyên nghiệp hơn)
+maintainers:
+  - name: FoodHub-DevOps-Team
+    email: admin@foodhub.com
+
+# Từ khóa tìm kiếm (Tùy chọn)
+keywords:
+  - foodhub
+  - microservices
+  - eks
+  - devsecops
