@@ -5,21 +5,21 @@ metadata:
   namespace: foodhub-dev
 type: Opaque
 data:
-  # Mật khẩu Admin (cho RDS)
+  # Mật khẩu Admin
   DB_ADMIN_PASSWORD: Rm9vZEh1YjEyMzQ1
   
-  # Mật khẩu cho từng Service User (Lấy từ chuỗi Base64 bạn gửi)
+  # Mật khẩu từng Service
   DB_PASSWORD_USERS: UGFzc3dvcmRfdXNlcnNfMTIz
   DB_PASSWORD_PRODUCTS: UGFzc3dvcmRfcHJvZHVjdHNfMTIz
   DB_PASSWORD_ORDERS: UGFzc3dvcmRfb3JkZXJzXzEyMw==
 
-  JWT_SECRET_KEY: ZWNobyAtbiBkR2hwY3kxcGN5MWhMWE5sWTNKbGRDMXJaWGt0Wm05eUxXcDNkQzFoZFhSb1pXNTBh
-V05oZEdsdmJpMXBiaTFrWlhaelpXTnZjSE10Y0hKdmFtVmpkQzF0ZFhOMExXSmxMWFpsY25rdGJH
-OXVaeTFoYm1RdGMyVmpkWEpsIHwgYmFzZTY0
+  # Sử dụng dấu > để viết chuỗi dài xuống dòng
+  JWT_SECRET_KEY: >-
+    ZWNobyAtbiBkR2hwY3kxcGN5MWhMWE5sWTNKbGRDMXJaWGt0Wm05eUxXcDNkQzFoZFhSb1pXNTBh
+    V05oZEdsdmJpMXBiaTFrWlhaelpXTnZjSE10Y0hKdmFtVmpkQzF0ZFhOMExXSmxMWFpsY25rdGJH
+    OXVaeTFoYm1RdGMyVmpkWEpsIHwgYmFzZTY0
 
   SPRING_MAIL_PASSWORD: a25meiBwYmlnIGdydmcgeWl0eg==
 
-  # JWT & OAuth2 (Bạn điền Base64 của bạn vào đây)
-  GOOGLE_CLIENT_ID: MjEwMDk5MTMyNDY2LXRsZDI3dWRrY3M0a3J0bXV0aHA3ODI4MWcwaWJqZmphLmFwcHMuZ29vZ2xl
-dXNlcmNvbnRlbnQuY29t
+  GOOGLE_CLIENT_ID: MjEwMDk5MTMyNDY2LXRsZDI3dWRrY3M0a3J0bXV0aHA3ODI4MWcwaWJqZmphLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t
   GOOGLE_CLIENT_SECRET: R09DU1BYLXpjaENDc0lTeTVYcFVTNlk2cUdpYjVaT3BIN1o=
