@@ -1,0 +1,18 @@
+replicaCount: 1
+containerPort: 3000
+serviceType: LoadBalancer # Tạo ELB trên AWS
+servicePort: 80            # Truy cập qua cổng 80
+image:
+  repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-frontend
+  tag: latest
+
+env:
+  - name: NODE_ENV
+    value: "production"
+  # Các biến này cực kỳ quan trọng cho file next.config.js của bạn
+  - name: USERS_SERVICE_URL
+    value: "http://users-service:8082"
+  - name: PRODUCTS_SERVICE_URL
+    value: "http://products-service:8081"
+  - name: ORDERS_SERVICE_URL
+    value: "http://orders-service:8083"
