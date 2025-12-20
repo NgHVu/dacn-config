@@ -1,18 +1,22 @@
 replicaCount: 1
 containerPort: 8081
 
+# --- BỔ SUNG: Health Check cho Products ---
+# probePath mặc định là "/actuator/health/readiness" từ file values gốc
+readinessDelay: 90          # Tăng lên 90s để Hibernate kịp tạo bảng
+livenessDelay: 120
+
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-products
   tag: fd20745
 
 env:
   - name: DB_USER
-    value: "foodhub_products" # Sửa lại cho khớp với Role trong Postgres
+    value: "foodhub_products" 
   - name: DB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: foodhub-secrets
         key: DB_PASSWORD_PRODUCTS
-  # Bổ sung DB_URL nếu chưa có trong ConfigMap
   - name: DB_URL
     value: "jdbc:postgresql://foodhub-db.cnwgawc8eb9k.ap-southeast-1.rds.amazonaws.com:5432/foodhub-db"
