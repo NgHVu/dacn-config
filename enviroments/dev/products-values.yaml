@@ -8,7 +8,7 @@ livenessDelay: 120
 
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-products
-  tag: 275ddf9
+  tag: 821bd1f
 
 env:
   - name: DB_USER
