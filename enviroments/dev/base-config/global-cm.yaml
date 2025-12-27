@@ -8,6 +8,8 @@ data:
   JPA_DDL_AUTO: "update"
   
   DB_URL_USERS: "jdbc:postgresql://foodhub-db.cnwgawc8eb9k.ap-southeast-1.rds.amazonaws.com:5432/foodhub_users"
+  DB_USER_USERS: "user_users"
+  
   DB_URL_PRODUCTS: "jdbc:postgresql://foodhub-db.cnwgawc8eb9k.ap-southeast-1.rds.amazonaws.com:5432/foodhub_products"
   DB_URL_ORDERS: "jdbc:postgresql://foodhub-db.cnwgawc8eb9k.ap-southeast-1.rds.amazonaws.com:5432/foodhub_orders"
 
