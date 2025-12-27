@@ -10,7 +10,7 @@ livenessDelay: 30
 
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-frontend
-  tag: 3f636c0
+  tag: 5807155
 
 env:
   - name: NODE_ENV
