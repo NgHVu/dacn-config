@@ -25,6 +25,8 @@ data:
   USERS_SERVICE_URL: "http://users-service:8082"
   PRODUCTS_SERVICE_URL: "http://products-service:8081"
   ORDERS_SERVICE_URL: "http://orders-service:8083"
+  NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+  GOOGLE_REDIRECT_URI: "http://localhost:3000/callback"
   
   FRONTEND_URL: "http://localhost:3000"
   SPRING_PROFILES_ACTIVE: "dev"
