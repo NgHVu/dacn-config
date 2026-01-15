@@ -1,0 +1,141 @@
+# ==========================================================
+# 1. BASE CONFIG (ConfigMap & Secret - PROD)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-prod-base
+  namespace: argocd
+  labels:
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: environments/prod/base-config/
+    directory:
+      recurse: false
+      include: '*.yaml' 
+      exclude: '*-values.yaml'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# ==========================================================
+# 2. USERS SERVICE (PROD)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-prod-users
+  namespace: argocd
+  labels:
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/prod/users-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 3. ORDERS SERVICE (PROD)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-prod-orders
+  namespace: argocd
+  labels:
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/prod/orders-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 4. PRODUCTS SERVICE (PROD)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-prod-products
+  namespace: argocd
+  labels:
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/prod/products-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 5. FRONTEND SERVICE (PROD)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-prod-frontend
+  namespace: argocd
+  labels:
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/prod/frontend-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

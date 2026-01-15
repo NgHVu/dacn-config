@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: foodhub-secrets
+  namespace: foodhub-staging
+type: Opaque
+stringData:
+  # Mật khẩu Database (Phải khớp với Terraform)
+  DB_ADMIN_PASSWORD: "FoodHubstaging12345"
+  DB_PASSWORD_USERS: "Password_users_123"
+  DB_PASSWORD_PRODUCTS: "Password_products_123"
+  DB_PASSWORD_ORDERS: "Password_orders_123"
+  
+  # Khóa bảo mật JWT & Google OAuth
+  JWT_EXPIRATION_MS: "86400000"
+  JPA_DDL_AUTO: "update"
+  JWT_SECRET_KEY: "dGhwY3kxcGN5MWhMWE5sWTNKbGRDMXJaWGt0Wm05eUxXcDNkQzFoZFhSb1pXNTBhV05oZEdsdmJpMXBiaTFrWlhaelpXTnZjSE10Y0hKdmFtVmpkQzF0ZFhOMExXSmxMWFpsY25rdGJHOXVaeTFoYm1RdGMyVmpkWEps"
+  SPRING_MAIL_PASSWORD: "knfz pbig grvg yitz"
+  GOOGLE_CLIENT_ID: "210099132466-tld27udkcs4krtmuthp78281g0ibjfja.apps.googleusercontent.com"
+  GOOGLE_CLIENT_SECRET: "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"

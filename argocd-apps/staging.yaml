@@ -1,0 +1,141 @@
+# ==========================================================
+# 1. BASE CONFIG (ConfigMap & Secret - STAGING)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-staging-base
+  namespace: argocd
+  labels:
+    env: staging
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: environments/staging/base-config/
+    directory:
+      recurse: false
+      include: '*.yaml' 
+      exclude: '*-values.yaml'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# ==========================================================
+# 2. USERS SERVICE (STAGING)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-staging-users
+  namespace: argocd
+  labels:
+    env: staging
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/staging/users-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 3. ORDERS SERVICE (STAGING)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-staging-orders
+  namespace: argocd
+  labels:
+    env: staging
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/staging/orders-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 4. PRODUCTS SERVICE (STAGING)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-staging-products
+  namespace: argocd
+  labels:
+    env: staging
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/staging/products-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 5. FRONTEND SERVICE (STAGING)
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-staging-frontend
+  namespace: argocd
+  labels:
+    env: staging
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/staging/frontend-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
