@@ -2,7 +2,7 @@
 replicaCount: 1
 image:
   repository: 257394468168.dkr.ecr.ap-southeast-1.amazonaws.com/foodhub-frontend
-  tag: ab61290
+  tag: f087607
 
 containerPort: 3000
 
