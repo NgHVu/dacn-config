@@ -14,7 +14,7 @@ spec:
   source:
     repoURL: https://github.com/NgHVu/dacn-config.git # <--- THAY LINK GIT CỦA BẠN
     targetRevision: main
-    path: environments/dev
+    path: environments/dev/base-config/
     # Chỉ định ArgoCD chỉ lấy các file yaml thuần (loại trừ các file values.yaml)
     # Tuy nhiên, cách tốt nhất là bạn nên gom global-cm.yaml và global-sec.yaml 
     # vào 1 thư mục con, ví dụ: environments/dev/base-config/

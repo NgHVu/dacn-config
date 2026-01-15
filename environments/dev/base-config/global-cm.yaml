@@ -17,14 +17,14 @@ data:
 
   # --- SERVICE DISCOVERY (Kết nối nội bộ trong K8s) ---
   # Định dạng: http://<tên-release-trong-argocd>:<port>
-  APP_SERVICES_USERS_URL: "http://foodhub-users:8082"
-  APP_SERVICES_PRODUCTS_URL: "http://foodhub-products:8081"
-  APP_SERVICES_ORDERS_URL: "http://foodhub-orders:8083"
+  APP_SERVICES_USERS_URL: "http://users-service:8082"
+  APP_SERVICES_PRODUCTS_URL: "http://products-service:8081"
+  APP_SERVICES_ORDERS_URL: "http://orders-service:8083"
   
   # --- FRONTEND CONFIG ---
-  USERS_SERVICE_URL: "http://foodhub-users:8082"
-  PRODUCTS_SERVICE_URL: "http://foodhub-products:8081"
-  ORDERS_SERVICE_URL: "http://foodhub-orders:8083"
+  USERS_SERVICE_URL: "http://users-service:8082"
+  PRODUCTS_SERVICE_URL: "http://products-service:8081"
+  ORDERS_SERVICE_URL: "http://orders-service:8083"
   
   # Vì chạy Port-Forward nên URL public là localhost
   NEXT_PUBLIC_APP_URL: "http://localhost:3000"
