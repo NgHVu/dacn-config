@@ -1,29 +1,33 @@
-# Default values for foodhub-chart.
-
-# Số lượng bản sao mặc định
+# --- CẤU HÌNH CƠ BẢN ---
 replicaCount: 1
 
-# Cấu hình Image mặc định
 image:
-  repository: "" 
+  repository: ""
   tag: "latest"
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
-# Cổng mặc định của container
+# Cổng mặc định của container (Backend thường là 8080)
 containerPort: 8080
 
-# --- BỔ SUNG: Cấu hình mặc định cho Health Check ---
-# Đường dẫn kiểm tra sức khỏe (Mặc định cho Backend)
-probePath: "/actuator/health/readiness" 
+# Namespace mặc định (Có thể bị ghi đè bởi ArgoCD Application)
+namespace: foodhub-dev
 
-# Thời gian chờ khởi động (Mặc định cho Backend cần tạo DB)
-readinessDelay: 60
+# --- CẤU HÌNH BLUE/GREEN (ARGO ROLLOUTS) ---
+blueGreen:
+  enabled: true
+  autoPromotionEnabled: false # Tắt tự động để Demo thủ công (Set true cho Prod thực tế)
+
+# --- CẤU HÌNH SERVICE ---
+service:
+  type: ClusterIP
+  port: 80 # Port mà Service mở ra cho bên ngoài gọi vào
+
+# --- CẤU HÌNH HEALTH CHECK (Logic cũ của bạn) ---
+probePath: "/actuator/health/readiness" # Mặc định cho Backend Spring Boot
+readinessDelay: 60                      # Chờ DB khởi tạo
 livenessDelay: 80
 
-# Loại Service mặc định
-serviceType: ClusterIP
-
-# Tài nguyên mặc định
+# --- TÀI NGUYÊN ---
 resources:
   limits:
     cpu: 500m
@@ -32,12 +36,23 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-# Namespace triển khai
-namespace: foodhub-dev
+# --- AUTO SCALING (HPA) ---
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
 
-# Biến môi trường mặc định
-env: []
-
-# Cấu hình Ingress
+# --- INGRESS (Tên miền) ---
 ingress:
   enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+# --- BIẾN MÔI TRƯỜNG RIÊNG ---
+env: []

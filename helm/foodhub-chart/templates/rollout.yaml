@@ -1,0 +1,73 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace | default "foodhub-dev" }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  
+  # --- CHIẾN LƯỢC BLUE/GREEN ---
+  strategy:
+    blueGreen: 
+      # Service chính phục vụ người dùng (Active - V1)
+      activeService: {{ .Release.Name }}
+      
+      # Service dùng để test phiên bản mới (Preview - V2)
+      previewService: {{ .Release.Name }}-preview
+      
+      # Tự động chuyển đổi hay cần người duyệt?
+      autoPromotionEnabled: {{ .Values.blueGreen.autoPromotionEnabled }}
+      
+      # (Tùy chọn) Tự động tắt bản cũ sau 30s để tiết kiệm tài nguyên
+      scaleDownDelaySeconds: 30
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.containerPort }}
+              protocol: TCP
+          
+          # --- LOGIC CŨ: Load biến môi trường Global ---
+          envFrom:
+            - configMapRef:
+                name: global-configs
+            - secretRef:
+                name: foodhub-secrets
+
+          # --- LOGIC CŨ: Load biến môi trường riêng ---
+          {{- if .Values.env }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+          {{- end }}
+
+          # --- LOGIC CŨ: Health Check ---
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: {{ .Values.readinessDelay }}
+            periodSeconds: 10
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probePath | replace "readiness" "liveness" }} # Hack nhẹ: thay chữ readiness bằng liveness
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: {{ .Values.livenessDelay }}
+            periodSeconds: 15
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

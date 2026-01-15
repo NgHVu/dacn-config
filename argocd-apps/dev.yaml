@@ -1,0 +1,147 @@
+# ==========================================================
+# 1. BASE CONFIG (ConfigMap & Secret)
+# Phần này chạy trước để tạo môi trường cho các App
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-dev-base
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git # <--- THAY LINK GIT CỦA BẠN
+    targetRevision: main
+    path: environments/dev
+    # Chỉ định ArgoCD chỉ lấy các file yaml thuần (loại trừ các file values.yaml)
+    # Tuy nhiên, cách tốt nhất là bạn nên gom global-cm.yaml và global-sec.yaml 
+    # vào 1 thư mục con, ví dụ: environments/dev/base-config/
+    # Ở đây tôi giả định bạn đã để nó trong environments/dev/
+    directory:
+      recurse: false
+      include: '*.yaml' 
+      exclude: '*-values.yaml' # Bỏ qua các file values, chỉ lấy global-*.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # Tự tạo namespace foodhub-dev nếu chưa có
+
+---
+# ==========================================================
+# 2. USERS SERVICE
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-dev-users
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git # <--- THAY LINK GIT CỦA BẠN
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      # ArgoCD sẽ lấy file values này đè lên values mặc định của Chart
+      valueFiles:
+        - ../../environments/dev/users-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 3. ORDERS SERVICE
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-dev-orders
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git # <--- THAY LINK GIT CỦA BẠN
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/dev/orders-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 4. PRODUCTS SERVICE
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-dev-products
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git # <--- THAY LINK GIT CỦA BẠN
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/dev/products-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# ==========================================================
+# 5. FRONTEND SERVICE
+# ==========================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foodhub-dev-frontend
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NgHVu/dacn-config.git # <--- THAY LINK GIT CỦA BẠN
+    targetRevision: main
+    path: helm/foodhub-chart
+    helm:
+      valueFiles:
+        - ../../environments/dev/frontend-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: foodhub-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

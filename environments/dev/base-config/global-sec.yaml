@@ -4,12 +4,16 @@ metadata:
   name: foodhub-secrets
   namespace: foodhub-dev
 type: Opaque
-stringData:  # SỬ DỤNG stringData ĐỂ TRÁNH LỖI MÃ HÓA THỦ CÔNG
-  DB_ADMIN_PASSWORD: "FoodHub12345"
+stringData:
+  # Mật khẩu Database (Phải khớp với Terraform)
+  DB_ADMIN_PASSWORD: "FoodHubdev12345"
   DB_PASSWORD_USERS: "Password_users_123"
   DB_PASSWORD_PRODUCTS: "Password_products_123"
   DB_PASSWORD_ORDERS: "Password_orders_123"
-  # Dán chuỗi JWT dài vào giữa dấu ngoặc kép, không được xuống dòng
+  
+  # Khóa bảo mật JWT & Google OAuth
+  JWT_EXPIRATION_MS: "86400000"
+  JPA_DDL_AUTO: "update"
   JWT_SECRET_KEY: "dGhwY3kxcGN5MWhMWE5sWTNKbGRDMXJaWGt0Wm05eUxXcDNkQzFoZFhSb1pXNTBhV05oZEdsdmJpMXBiaTFrWlhaelpXTnZjSE10Y0hKdmFtVmpkQzF0ZFhOMExXSmxMWFpsY25rdGJHOXVaeTFoYm1RdGMyVmpkWEps"
   SPRING_MAIL_PASSWORD: "knfz pbig grvg yitz"
   GOOGLE_CLIENT_ID: "210099132466-tld27udkcs4krtmuthp78281g0ibjfja.apps.googleusercontent.com"

@@ -1,21 +1,36 @@
+# 1. SERVICE ACTIVE (Bản đang chạy ổn định)
 apiVersion: v1
 kind: Service
 metadata:
-  # .Release.Name sẽ tự động lấy tên từ file values (frontend, users, orders...)
   name: {{ .Release.Name }}
   namespace: {{ .Values.namespace | default "foodhub-dev" }}
   labels:
     app: {{ .Release.Name }}
 spec:
-  # Mặc định là ClusterIP (nội bộ), trừ Frontend sẽ được ghi đè là LoadBalancer trong values
-  type: {{ .Values.serviceType | default "ClusterIP" }}
+  type: {{ .Values.service.type }}
   ports:
-    - name: http
-      # Port mà các service khác sẽ gọi tới (ví dụ: http://users-service:8082)
-      port: {{ .Values.servicePort | default .Values.containerPort }}
-      # Port thực tế mà ứng dụng trong Container đang lắng nghe
+    - port: {{ .Values.service.port }}
       targetPort: {{ .Values.containerPort }}
       protocol: TCP
+      name: http
   selector:
-    # Selector phải khớp với labels trong file deployment.yaml
+    app: {{ .Release.Name }}
+
+---
+# 2. SERVICE PREVIEW (Bản mới dùng để test - Green)
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-preview
+  namespace: {{ .Values.namespace | default "foodhub-dev" }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  type: ClusterIP # Preview service luôn là ClusterIP nội bộ
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.containerPort }}
+      protocol: TCP
+      name: http
+  selector:
     app: {{ .Release.Name }}
