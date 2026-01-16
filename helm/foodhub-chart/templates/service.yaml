@@ -1,9 +1,8 @@
-# 1. SERVICE ACTIVE (Bản đang chạy ổn định)
+# 1. SERVICE ACTIVE
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}
-  namespace: {{ .Values.namespace | default "foodhub-dev" }}
   labels:
     app: {{ .Release.Name }}
 spec:
@@ -17,16 +16,15 @@ spec:
     app: {{ .Release.Name }}
 
 ---
-# 2. SERVICE PREVIEW (Bản mới dùng để test - Green)
+# 2. SERVICE PREVIEW
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-preview
-  namespace: {{ .Values.namespace | default "foodhub-dev" }}
   labels:
     app: {{ .Release.Name }}
 spec:
-  type: ClusterIP # Preview service luôn là ClusterIP nội bộ
+  type: ClusterIP
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.containerPort }}

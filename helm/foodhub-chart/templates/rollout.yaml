@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: {{ .Release.Name }}
-  namespace: {{ .Values.namespace | default "foodhub-dev" }}
   labels:
     app: {{ .Release.Name }}
 spec:
@@ -12,19 +11,11 @@ spec:
     matchLabels:
       app: {{ .Release.Name }}
   
-  # --- CHIẾN LƯỢC BLUE/GREEN ---
   strategy:
     blueGreen: 
-      # Service chính phục vụ người dùng (Active - V1)
       activeService: {{ .Release.Name }}
-      
-      # Service dùng để test phiên bản mới (Preview - V2)
       previewService: {{ .Release.Name }}-preview
-      
-      # Tự động chuyển đổi hay cần người duyệt?
       autoPromotionEnabled: {{ .Values.blueGreen.autoPromotionEnabled }}
-      
-      # (Tùy chọn) Tự động tắt bản cũ sau 30s để tiết kiệm tài nguyên
       scaleDownDelaySeconds: 30
 
   template:
@@ -41,20 +32,17 @@ spec:
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
           
-          # --- LOGIC CŨ: Load biến môi trường Global ---
           envFrom:
             - configMapRef:
                 name: global-configs
             - secretRef:
                 name: foodhub-secrets
 
-          # --- LOGIC CŨ: Load biến môi trường riêng ---
           {{- if .Values.env }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
           {{- end }}
 
-          # --- LOGIC CŨ: Health Check ---
           readinessProbe:
             httpGet:
               path: {{ .Values.probePath }}
@@ -64,7 +52,7 @@ spec:
             failureThreshold: 5
           livenessProbe:
             httpGet:
-              path: {{ .Values.probePath | replace "readiness" "liveness" }} # Hack nhẹ: thay chữ readiness bằng liveness
+              path: {{ .Values.probePath | replace "readiness" "liveness" }}
               port: {{ .Values.containerPort }}
             initialDelaySeconds: {{ .Values.livenessDelay }}
             periodSeconds: 15
