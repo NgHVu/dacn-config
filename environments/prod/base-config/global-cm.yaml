@@ -27,6 +27,6 @@ data:
   ORDERS_SERVICE_URL: "http://foodhub-prod-orders:8083"
   
   # Vì chạy Port-Forward nên URL public là localhost
-  NEXT_PUBLIC_APP_URL: "http://a0a045358fd094087831676cf2c907ee-702165636.ap-southeast-1.elb.amazonaws.com"
-  GOOGLE_REDIRECT_URI: "http://a0a045358fd094087831676cf2c907ee-702165636.ap-southeast-1.elb.amazonaws.com/callback"
-  FRONTEND_URL: "http://a0a045358fd094087831676cf2c907ee-702165636.ap-southeast-1.elb.amazonaws.com"
+  NEXT_PUBLIC_APP_URL: "http://aaaef99cd1abb4f9daa9e49f4abd837f-1426694093.ap-southeast-1.elb.amazonaws.com"
+  GOOGLE_REDIRECT_URI: "http://aaaef99cd1abb4f9daa9e49f4abd837f-1426694093.ap-southeast-1.elb.amazonaws.com/callback"
+  FRONTEND_URL: "http://aaaef99cd1abb4f9daa9e49f4abd837f-1426694093.ap-southeast-1.elb.amazonaws.com"
